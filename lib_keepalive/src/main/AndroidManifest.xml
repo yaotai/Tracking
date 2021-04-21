@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wl.lib_keepalive">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <application>
+        <activity
+            android:theme="@style/KeepTheme"
+            android:name=".activitykeep.KeepActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.wwl.guardback"
+            />
+        <service android:name=".double_process.LocalService"
+            android:exported="true"
+            android:process=":local"/>
+        <service android:name=".double_process.LocalService$InnnerService"
+            android:exported="true"
+            android:process=":local"/>
+        <service android:name=".double_process.RemoteService"
+            android:exported="true"
+            android:process=":remote"/>
+        <service android:name=".double_process.RemoteService$InnnerService"
+            android:exported="true"
+            android:process=":remote"/>
+        <service android:name=".double_process.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+    </application>
+
+
+</manifest>

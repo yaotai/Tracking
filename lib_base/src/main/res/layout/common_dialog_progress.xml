@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+
+              android:background="@drawable/bg_dwonload_dialog"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ProgressBar
+            android:id="@+id/progess"
+            android:layout_width="60dp"
+            android:padding="8dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/common_ic_progress_rotate"
+            android:indeterminateOnly="true"/>
+
+    <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:text="@string/msg_loding"
+            android:textColor="?attr/theme_color"
+            android:textSize="12sp"/>
+</LinearLayout>

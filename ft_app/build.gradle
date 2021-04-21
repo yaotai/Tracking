@@ -1,0 +1,76 @@
+import com.wwl.version.plugin.*
+plugins{
+    // 这个 id 就是在 VersionPlugin 文件夹下 build.gradle 文件内定义的 id
+    id "com.wwl.version.plugin"
+}
+apply plugin: 'com.android.application'
+apply plugin: 'me.ele.lancet'
+apply plugin: 'android-aspectjx'
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+    defaultConfig {
+        applicationId "com.app.wwl.component"
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean' , 'isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+        }
+        advanced{
+            buildConfigField 'boolean', 'isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+        }
+        debug{
+            buildConfigField 'boolean','isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+aspectjx{
+    exclude 'androidx','com.google'
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation ReflectPart.joor;
+    implementation ReflectPart.epic;
+    implementation ReflectPart.javapoet;
+    implementation AndroidX.multidex
+    compileOnly ReflectPart.lancet;
+
+    //路由 arouter
+    implementation WArouter.arouter_api
+    annotationProcessor WArouter.arouter_compiler
+
+
+    implementation AndroidX.androidx
+    implementation AndroidX.material
+    implementation AndroidX.constraintlayout
+    implementation project(':lib_base')
+    implementation project(":lib_skin")
+    implementation project(":lib_monitor_offline")
+    implementation project(":lib_monitor_online")
+    implementation project(":lib_aop")
+    implementation project(':lib_databus')
+    implementation project(':lib_storage')
+    implementation project(':lib_keepalive')
+
+}

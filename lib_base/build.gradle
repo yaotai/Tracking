@@ -1,0 +1,79 @@
+import com.wwl.version.plugin.*
+plugins {
+    id 'com.android.library'
+}
+plugins{
+    // 这个 id 就是在 VersionPlugin 文件夹下 build.gradle 文件内定义的 id
+    id "com.wwl.version.plugin"
+}
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean' , 'isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+
+        }
+        advanced{
+            buildConfigField 'boolean', 'isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+        }
+        debug{
+            buildConfigField 'boolean','isApplication',Versions.isApplication.toString()
+            buildConfigField 'boolean' , 'isDebugVersion',Versions.isDebugVersion.toString()
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //阿里云DNS begin
+     compile 'com.aliyun.ams:alicloud-android-httpdns:2.0.0'
+    //阿里云DNS end
+    implementation project(':lib_skin')
+    implementation project(':libtop_log')
+    //implementation Wdependence.
+
+
+    //RxLifecycle
+//    api 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+//    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
+//    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    api Wdependence.rxlifecycle
+    api Wdependence.rxlifecycle_android
+    api Wdependence.rxlifecycle_components
+    api Wdependence.rxPermissions
+
+    implementation AndroidX.constraintlayout
+    //路由 arouter
+    implementation WArouter.arouter_api
+    annotationProcessor WArouter.arouter_compiler
+}

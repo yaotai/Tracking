@@ -1,0 +1,81 @@
+import com.wwl.version.plugin.*
+plugins{
+    // 这个 id 就是在 VersionPlugin 文件夹下 build.gradle 文件内定义的 id
+    id "com.wwl.version.plugin"
+}
+if (Versions.isApplication) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        if (Versions.isApplication) {
+            applicationId "com.wl.ft_login"
+        }
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets{
+        main{
+            if (Versions.isApplication) {
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            }else{
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation AndroidX.androidx
+    implementation AndroidX.material
+    implementation AndroidX.constraintlayout
+    implementation AndroidX.androidx
+    implementation Wdependence.retorfi
+    implementation Wdependence.retorfi_adapter
+    implementation Wdependence.scalars
+    implementation Wdependence.okhttp
+    implementation Wdependence.interceptor
+    implementation Wdependence. converter_gson
+    implementation Wdependence.rxjava
+    implementation Wdependence.rxandroid
+    implementation Wdependence.fastjson
+    //RxLifecycle
+    implementation Wdependence.rxlifecycle
+    implementation Wdependence.rxlifecycle_android
+    implementation Wdependence.rxlifecycle_components
+    //权限申请库
+    implementation Wdependence.rxPermissions
+    implementation project(':lib_base')
+    implementation project(':lib_http')
+    //路由 arouter
+    //路由 arouter
+    implementation WArouter.arouter_api
+    annotationProcessor WArouter.arouter_compiler
+   //
+}
